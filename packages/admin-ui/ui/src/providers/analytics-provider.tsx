@@ -1,4 +1,4 @@
-import { AnalyticsBrowser } from "@segment/analytics-next"
+// import { AnalyticsBrowser } from "@segment/analytics-next"
 import { useAdminGetSession, useAdminStore, useAdminUsers } from "medusa-react"
 import React, {
   createContext,
@@ -43,181 +43,187 @@ type AnalyticsContextType = {
 const AnalyticsContext = createContext<AnalyticsContextType | null>(null)
 
 export const AnalyticsProvider = ({ writeKey, children }: Props) => {
-  const [submittingConfig, setSubmittingConfig] = useState(false)
-  const { analytics_config: config, isLoading } = useAdminAnalyticsConfig()
 
-  const location = useLocation()
+retrun (
+  <p>no</p>
+)
 
-  const { user } = useAdminGetSession()
-  const { users } = useAdminUsers()
-  const { store } = useAdminStore()
 
-  const { isFeatureEnabled } = useFeatureFlag()
-  const isEnabled = useMemo(() => {
-    return isFeatureEnabled("analytics")
-  }, [isFeatureEnabled])
+//   const [submittingConfig, setSubmittingConfig] = useState(false)
+//   const { analytics_config: config, isLoading } = useAdminAnalyticsConfig()
 
-  const analytics = useMemo(() => {
-    if (!config || !isEnabled) {
-      return null // Don't initialize analytics if not enabled or the user's preferences are not loaded yet
-    }
+//   const location = useLocation()
 
-    if (config.opt_out) {
-      return null // Don't initialize if user has opted out
-    }
+//   const { user } = useAdminGetSession()
+//   const { users } = useAdminUsers()
+//   const { store } = useAdminStore()
 
-    return AnalyticsBrowser.load({ writeKey })
-  }, [config, writeKey, isEnabled])
+//   const { isFeatureEnabled } = useFeatureFlag()
+//   const isEnabled = useMemo(() => {
+//     return isFeatureEnabled("analytics")
+//   }, [isFeatureEnabled])
 
-  useEffect(() => {
-    if (!analytics || !config || !user || !store) {
-      return
-    }
+//   const analytics = useMemo(() => {
+//     if (!config || !isEnabled) {
+//       return null // Don't initialize analytics if not enabled or the user's preferences are not loaded yet
+//     }
 
-    analytics.identify(user.id, {
-      store: store.name,
-    })
-  }, [config, analytics, user, store])
+//     if (config.opt_out) {
+//       return null // Don't initialize if user has opted out
+//     }
 
-  const askPermission = useMemo(() => {
-    if (submittingConfig) {
-      return true
-    }
+//     return AnalyticsBrowser.load({ writeKey })
+//   }, [config, writeKey, isEnabled])
 
-    if (!isEnabled || !user) {
-      return false // Don't ask for permission if feature is not enabled
-    }
+//   useEffect(() => {
+//     if (!analytics || !config || !user || !store) {
+//       return
+//     }
 
-    return !config && !isLoading
-  }, [config, isLoading, isEnabled, user, submittingConfig])
+//     analytics.identify(user.id, {
+//       store: store.name,
+//     })
+//   }, [config, analytics, user, store])
 
-  /**
-   * Ensure that the focus modal is animated smoothly.
-   */
-  const animateIn = useDebounce(askPermission, 1000)
+//   const askPermission = useMemo(() => {
+//     if (submittingConfig) {
+//       return true
+//     }
 
-  const track = useCallback(
-    (event: Event, properties?: Record<string, unknown>) => {
-      if (!analytics) {
-        // If analytics is not initialized, then we return early
-        return
-      }
+//     if (!isEnabled || !user) {
+//       return false // Don't ask for permission if feature is not enabled
+//     }
 
-      analytics.track(event, properties)
-    },
-    [analytics]
-  )
+//     return !config && !isLoading
+//   }, [config, isLoading, isEnabled, user, submittingConfig])
 
-  const trackNumberOfUsers = useCallback(
-    (properties: TrackCountPayload) => {
-      track("numUsers", properties)
-    },
-    [track]
-  )
+//   /**
+//    * Ensure that the focus modal is animated smoothly.
+//    */
+//   const animateIn = useDebounce(askPermission, 1000)
 
-  const trackStoreName = useCallback(
-    (properties: TrackStoreNamePayload) => {
-      track("storeName", properties)
-    },
-    [track]
-  )
+//   const track = useCallback(
+//     (event: Event, properties?: Record<string, unknown>) => {
+//       if (!analytics) {
+//         // If analytics is not initialized, then we return early
+//         return
+//       }
 
-  const trackNumberOfProducts = (properties: TrackCountPayload) => {
-    track("numProducts", properties)
-  }
+//       analytics.track(event, properties)
+//     },
+//     [analytics]
+//   )
 
-  const trackNumberOfOrders = (properties: TrackCountPayload) => {
-    track("numOrders", properties)
-  }
+//   const trackNumberOfUsers = useCallback(
+//     (properties: TrackCountPayload) => {
+//       track("numUsers", properties)
+//     },
+//     [track]
+//   )
 
-  const trackRegions = (properties: TrackRegionsPayload) => {
-    track("regions", properties)
-  }
+//   const trackStoreName = useCallback(
+//     (properties: TrackStoreNamePayload) => {
+//       track("storeName", properties)
+//     },
+//     [track]
+//   )
 
-  const trackCurrencies = (properties: TrackCurrenciesPayload) => {
-    track("currencies", properties)
-  }
+//   const trackNumberOfProducts = (properties: TrackCountPayload) => {
+//     track("numProducts", properties)
+//   }
 
-  const trackNumberOfDiscounts = (properties: TrackCountPayload) => {
-    track("numDiscounts", properties)
-  }
+//   const trackNumberOfOrders = (properties: TrackCountPayload) => {
+//     track("numOrders", properties)
+//   }
 
-  const trackUserEmail = (properties: TrackUserEmailPayload) => {
-    track("userEmail", properties)
-  }
+//   const trackRegions = (properties: TrackRegionsPayload) => {
+//     track("regions", properties)
+//   }
 
-  // Track number of users
-  useEffect(() => {
-    if (users) {
-      trackNumberOfUsers({ count: users.length })
-    }
-  }, [users, trackNumberOfUsers])
+//   const trackCurrencies = (properties: TrackCurrenciesPayload) => {
+//     track("currencies", properties)
+//   }
 
-  // Track store name
-  useEffect(() => {
-    if (store) {
-      trackStoreName({ name: store.name })
-    }
-  }, [store, trackStoreName])
+//   const trackNumberOfDiscounts = (properties: TrackCountPayload) => {
+//     track("numDiscounts", properties)
+//   }
 
-  // Track pages visited when location changes
-  useEffect(() => {
-    if (!analytics) {
-      return
-    }
+//   const trackUserEmail = (properties: TrackUserEmailPayload) => {
+//     track("userEmail", properties)
+//   }
 
-    analytics.page()
-  }, [location])
+//   // Track number of users
+//   useEffect(() => {
+//     if (users) {
+//       trackNumberOfUsers({ count: users.length })
+//     }
+//   }, [users, trackNumberOfUsers])
 
-  return (
-    <AnalyticsContext.Provider
-      value={{
-        trackRegions,
-        trackCurrencies,
-        trackNumberOfOrders,
-        trackNumberOfProducts,
-        trackNumberOfDiscounts,
-        trackUserEmail,
-        setSubmittingConfig,
-      }}
-    >
-      {askPermission && (
-        <Fade isVisible={animateIn} isFullScreen={true}>
-          <AnalyticsPreferencesModal />
-        </Fade>
-      )}
-      {children}
-    </AnalyticsContext.Provider>
-  )
-}
+//   // Track store name
+//   useEffect(() => {
+//     if (store) {
+//       trackStoreName({ name: store.name })
+//     }
+//   }, [store, trackStoreName])
 
-type TrackCurrenciesPayload = {
-  used_currencies: string[]
-}
+//   // Track pages visited when location changes
+//   useEffect(() => {
+//     if (!analytics) {
+//       return
+//     }
 
-type TrackStoreNamePayload = {
-  name: string
-}
+//     analytics.page()
+//   }, [location])
 
-type TrackCountPayload = {
-  count: number
-}
+//   return (
+//     <AnalyticsContext.Provider
+//       value={{
+//         trackRegions,
+//         trackCurrencies,
+//         trackNumberOfOrders,
+//         trackNumberOfProducts,
+//         trackNumberOfDiscounts,
+//         trackUserEmail,
+//         setSubmittingConfig,
+//       }}
+//     >
+//       {askPermission && (
+//         <Fade isVisible={animateIn} isFullScreen={true}>
+//           <AnalyticsPreferencesModal />
+//         </Fade>
+//       )}
+//       {children}
+//     </AnalyticsContext.Provider>
+//   )
+// }
 
-type TrackRegionsPayload = {
-  regions: string[]
-  count: number
-}
+// type TrackCurrenciesPayload = {
+//   used_currencies: string[]
+// }
 
-type TrackUserEmailPayload = {
-  email: string | undefined
-}
+// type TrackStoreNamePayload = {
+//   name: string
+// }
 
-export const useAnalytics = () => {
-  const context = useContext(AnalyticsContext)
+// type TrackCountPayload = {
+//   count: number
+// }
 
-  if (!context) {
-    throw new Error("useAnalytics must be used within a AnalyticsProvider")
-  }
+// type TrackRegionsPayload = {
+//   regions: string[]
+//   count: number
+// }
 
-  return context
+// type TrackUserEmailPayload = {
+//   email: string | undefined
+// }
+
+// export const useAnalytics = () => {
+//   const context = useContext(AnalyticsContext)
+
+//   if (!context) {
+//     throw new Error("useAnalytics must be used within a AnalyticsProvider")
+//   }
+
+  return //context
 }

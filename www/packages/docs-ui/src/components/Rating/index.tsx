@@ -26,22 +26,22 @@ export const Rating: React.FC<RatingProps> = ({
   const [hoverRating, setHoverRating] = useState(0)
   const starElms = useRef<HTMLElement[]>([])
   const starArr = Array.from(Array(5).keys())
-  const { track } = useAnalytics()
+  // const { track } = useAnalytics()
   const { updateNotification } = useNotifications(true) || {}
 
-  const submitTracking = useCallback(
-    (selectedRating?: number, feedback?: string) => {
-      track(
-        event,
-        {
-          rating: selectedRating || rating,
-          additionalFeedback: feedback || additionalFeedback,
-        },
-        () => onRating?.(selectedRating || rating)
-      )
-    },
-    [rating, additionalFeedback]
-  )
+  // const submitTracking = useCallback(
+  //   (selectedRating?: number, feedback?: string) => {
+  //     // track(
+  //     //   event,
+  //     //   {
+  //     //     rating: selectedRating || rating,
+  //     //     additionalFeedback: feedback || additionalFeedback,
+  //     //   },
+  //     //   () => onRating?.(selectedRating || rating)
+  //     // )
+  //   },
+  //   [rating, additionalFeedback]
+  // )
 
   const handleRating = (selectedRating: number) => {
     if (rating) {
@@ -53,7 +53,7 @@ export const Rating: React.FC<RatingProps> = ({
       for (let i = 0; i < selectedRating; i++) {
         starElms.current[i].classList.add("animate-tada")
       }
-      submitTracking(selectedRating)
+      // submitTracking(selectedRating)
     }
   }
 
@@ -67,7 +67,7 @@ export const Rating: React.FC<RatingProps> = ({
       // update parent notification ID
       updateNotification(parentNotificationId, {
         closeButtonText: "Submit",
-        onClose: () => submitTracking(rating, additionalFeedback),
+        // onClose: () => submitTracking(rating, additionalFeedback),
       })
     }
   }, [additionalFeedback, rating])

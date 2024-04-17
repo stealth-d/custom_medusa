@@ -6,7 +6,7 @@ import {
   RouterProvider,
 } from "react-router-dom"
 import Spinner from "./components/atoms/spinner"
-import { AnalyticsProvider } from "./providers/analytics-provider"
+// import { AnalyticsProvider } from "./providers/analytics-provider"
 import { WRITE_KEY } from "./constants/analytics"
 
 const NotFound = lazy(() => import("./pages/404"))
@@ -23,17 +23,17 @@ const router = createBrowserRouter(
       <Route
         path="a/*"
         element={
-          <AnalyticsProvider writeKey={WRITE_KEY}>
+          // <AnalyticsProvider writeKey={WRITE_KEY}>
             <Dashboard />
-          </AnalyticsProvider>
+          // </AnalyticsProvider>
         }
       />
       <Route
         path="invite"
         element={
-          <AnalyticsProvider writeKey={WRITE_KEY}>
+          // <AnalyticsProvider writeKey={WRITE_KEY}>
             <InvitePage />
-          </AnalyticsProvider>
+          // </AnalyticsProvider>
         }
       />
       <Route path="login" element={<LoginPage />} />

@@ -5,7 +5,7 @@ import express from "express"
 import fs from "fs"
 import { sync as existsSync } from "fs-exists-cached"
 import { getConfigFile } from "medusa-core-utils"
-import { track } from "medusa-telemetry"
+// import { track } from "medusa-telemetry"
 import path from "path"
 import { DataSource, DataSourceOptions } from "typeorm"
 import loaders from "../loaders"
@@ -38,7 +38,7 @@ type SeedOptions = {
 }
 
 const seed = async function ({ directory, migrate, seedFile }: SeedOptions) {
-  track("CLI_SEED")
+  // track("CLI_SEED")
   let resolvedPath = seedFile
 
   // If we are already given an absolute path we can skip resolution step
@@ -291,7 +291,7 @@ const seed = async function ({ directory, migrate, seedFile }: SeedOptions) {
     }
   })
 
-  track("CLI_SEED_COMPLETED")
+  // track("CLI_SEED_COMPLETED")
 }
 
 export default seed

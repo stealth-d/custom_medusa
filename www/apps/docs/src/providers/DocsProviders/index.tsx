@@ -1,5 +1,5 @@
 import {
-  AnalyticsProvider,
+  // AnalyticsProvider,
   ColorModeProvider,
   ModalProvider,
   NotificationProvider,
@@ -21,7 +21,7 @@ const DocsProviders = ({ children }: DocsProvidersProps) => {
   } = useThemeConfig() as ThemeConfig
 
   return (
-    <AnalyticsProvider writeKey={apiKey}>
+    // <AnalyticsProvider writeKey={apiKey}>
       <ColorModeProvider>
         <ModalProvider>
           <SearchProvider>
@@ -34,7 +34,7 @@ const DocsProviders = ({ children }: DocsProvidersProps) => {
           </SearchProvider>
         </ModalProvider>
       </ColorModeProvider>
-    </AnalyticsProvider>
+    // </AnalyticsProvider>
   )
 }
 

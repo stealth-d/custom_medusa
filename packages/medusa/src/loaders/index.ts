@@ -12,7 +12,7 @@ import {
 import { asValue } from "awilix"
 import { Express, NextFunction, Request, Response } from "express"
 import { createMedusaContainer } from "medusa-core-utils"
-import { track } from "medusa-telemetry"
+// import { track } from "medusa-telemetry"
 import { EOL } from "os"
 import requestIp from "request-ip"
 import { Connection } from "typeorm"
@@ -180,7 +180,7 @@ export default async ({
 }> => {
   const configModule = loadConfig(rootDirectory)
   const featureFlagRouter = featureFlagsLoader(configModule, Logger)
-  track("FEATURE_FLAGS_LOADED")
+  // track("FEATURE_FLAGS_LOADED")
 
   if (featureFlagRouter.isFeatureEnabled(MedusaV2Flag.key)) {
     return await loadMedusaV2({
@@ -214,26 +214,26 @@ export default async ({
   const { shutdown: redisShutdown } = await redisLoader({ container, configModule, logger: Logger })
 
   const modelsActivity = Logger.activity(`Initializing models${EOL}`)
-  track("MODELS_INIT_STARTED")
+  // track("MODELS_INIT_STARTED")
   modelsLoader({ container, rootDirectory })
   const mAct = Logger.success(modelsActivity, "Models initialized") || {}
-  track("MODELS_INIT_COMPLETED", { duration: mAct.duration })
+  // track("MODELS_INIT_COMPLETED", { duration: mAct.duration })
 
   const pmActivity = Logger.activity(`Initializing plugin models${EOL}`)
-  track("PLUGIN_MODELS_INIT_STARTED")
+  // track("PLUGIN_MODELS_INIT_STARTED")
   await registerPluginModels({
     rootDirectory,
     container,
     configModule,
   })
   const pmAct = Logger.success(pmActivity, "Plugin models initialized") || {}
-  track("PLUGIN_MODELS_INIT_COMPLETED", { duration: pmAct.duration })
+  // track("PLUGIN_MODELS_INIT_COMPLETED", { duration: pmAct.duration })
 
   const stratActivity = Logger.activity(`Initializing strategies${EOL}`)
-  track("STRATEGIES_INIT_STARTED")
+  // track("STRATEGIES_INIT_STARTED")
   strategiesLoader({ container, configModule, isTest })
   const stratAct = Logger.success(stratActivity, "Strategies initialized") || {}
-  track("STRATEGIES_INIT_COMPLETED", { duration: stratAct.duration })
+  // track("STRATEGIES_INIT_COMPLETED", { duration: stratAct.duration })
 
   const pgConnection = await pgConnectionLoader({ container, configModule })
 
@@ -241,19 +241,19 @@ export default async ({
   await loadLegacyModulesEntities(configModules, container)
 
   const dbActivity = Logger.activity(`Initializing database${EOL}`)
-  track("DATABASE_INIT_STARTED")
+  // track("DATABASE_INIT_STARTED")
   const dbConnection = await databaseLoader({
     container,
     configModule,
   })
   const dbAct = Logger.success(dbActivity, "Database initialized") || {}
-  track("DATABASE_INIT_COMPLETED", { duration: dbAct.duration })
+  // track("DATABASE_INIT_COMPLETED", { duration: dbAct.duration })
 
   const repoActivity = Logger.activity(`Initializing repositories${EOL}`)
-  track("REPOSITORIES_INIT_STARTED")
+  // track("REPOSITORIES_INIT_STARTED")
   repositoriesLoader({ container })
   const rAct = Logger.success(repoActivity, "Repositories initialized") || {}
-  track("REPOSITORIES_INIT_COMPLETED", { duration: rAct.duration })
+  // track("REPOSITORIES_INIT_COMPLETED", { duration: rAct.duration })
 
   container.register({
     [ContainerRegistrationKeys.MANAGER]: asValue(dataSource.manager),
@@ -262,13 +262,13 @@ export default async ({
   container.register("remoteQuery", asValue(null)) // ensure remoteQuery is always registered
 
   const servicesActivity = Logger.activity(`Initializing services${EOL}`)
-  track("SERVICES_INIT_STARTED")
+  // track("SERVICES_INIT_STARTED")
   servicesLoader({ container, configModule, isTest })
   const servAct = Logger.success(servicesActivity, "Services initialized") || {}
-  track("SERVICES_INIT_COMPLETED", { duration: servAct.duration })
+  // track("SERVICES_INIT_COMPLETED", { duration: servAct.duration })
 
   const modulesActivity = Logger.activity(`Initializing modules${EOL}`)
-  track("MODULES_INIT_STARTED")
+  // track("MODULES_INIT_STARTED")
 
   // Move before services init once all modules are migrated and do not rely on core resources anymore
   const { onApplicationShutdown: medusaAppOnApplicationShutdown } = await loadMedusaApp({
@@ -277,14 +277,14 @@ export default async ({
   })
 
   const modAct = Logger.success(modulesActivity, "Modules initialized") || {}
-  track("MODULES_INIT_COMPLETED", { duration: modAct.duration })
+  // track("MODULES_INIT_COMPLETED", { duration: modAct.duration })
 
   const expActivity = Logger.activity(`Initializing express${EOL}`)
-  track("EXPRESS_INIT_STARTED")
+  // track("EXPRESS_INIT_STARTED")
   const { shutdown: expressShutdown } = await expressLoader({ app: expressApp, configModule })
   await passportLoader({ app: expressApp, configModule })
   const exAct = Logger.success(expActivity, "Express intialized") || {}
-  track("EXPRESS_INIT_COMPLETED", { duration: exAct.duration })
+  // track("EXPRESS_INIT_COMPLETED", { duration: exAct.duration })
 
   // Add the registered services to the request scope
   expressApp.use((req: Request, res: Response, next: NextFunction) => {
@@ -295,7 +295,7 @@ export default async ({
   })
 
   const pluginsActivity = Logger.activity(`Initializing plugins${EOL}`)
-  track("PLUGINS_INIT_STARTED")
+  // track("PLUGINS_INIT_STARTED")
   await pluginsLoader({
     container,
     rootDirectory,
@@ -304,16 +304,16 @@ export default async ({
     activityId: pluginsActivity,
   })
   const pAct = Logger.success(pluginsActivity, "Plugins intialized") || {}
-  track("PLUGINS_INIT_COMPLETED", { duration: pAct.duration })
+  // track("PLUGINS_INIT_COMPLETED", { duration: pAct.duration })
 
   const subActivity = Logger.activity(`Initializing subscribers${EOL}`)
-  track("SUBSCRIBERS_INIT_STARTED")
+  // track("SUBSCRIBERS_INIT_STARTED")
   subscribersLoader({ container })
   const subAct = Logger.success(subActivity, "Subscribers initialized") || {}
-  track("SUBSCRIBERS_INIT_COMPLETED", { duration: subAct.duration })
+  // track("SUBSCRIBERS_INIT_COMPLETED", { duration: subAct.duration })
 
   const apiActivity = Logger.activity(`Initializing API${EOL}`)
-  track("API_INIT_STARTED")
+  // track("API_INIT_STARTED")
   await apiLoader({
     container,
     app: expressApp,
@@ -321,22 +321,22 @@ export default async ({
     featureFlagRouter,
   })
   const apiAct = Logger.success(apiActivity, "API initialized") || {}
-  track("API_INIT_COMPLETED", { duration: apiAct.duration })
+  // track("API_INIT_COMPLETED", { duration: apiAct.duration })
 
   const defaultsActivity = Logger.activity(`Initializing defaults${EOL}`)
-  track("DEFAULTS_INIT_STARTED")
+  // track("DEFAULTS_INIT_STARTED")
   await defaultsLoader({ container })
   const dAct = Logger.success(defaultsActivity, "Defaults initialized") || {}
-  track("DEFAULTS_INIT_COMPLETED", { duration: dAct.duration })
+  // track("DEFAULTS_INIT_COMPLETED", { duration: dAct.duration })
 
   const searchActivity = Logger.activity(
     `Initializing search engine indexing${EOL}`
   )
-  track("SEARCH_ENGINE_INDEXING_STARTED")
+  // track("SEARCH_ENGINE_INDEXING_STARTED")
   await searchIndexLoader({ container })
   const searchAct =
     Logger.success(searchActivity, "Indexing event emitted") || {}
-  track("SEARCH_ENGINE_INDEXING_COMPLETED", { duration: searchAct.duration })
+  // track("SEARCH_ENGINE_INDEXING_COMPLETED", { duration: searchAct.duration })
 
   async function shutdown() {
     await promiseAll([

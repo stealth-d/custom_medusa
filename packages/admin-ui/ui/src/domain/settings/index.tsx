@@ -34,13 +34,14 @@ type SettingsCardType = {
 }
 
 const settings: SettingsCardType[] = [
-  {
-    heading: "API Key Management",
-    description: "Create and manage API keys",
-    icon: KeyIcon,
-    to: "/a/publishable-api-keys",
-    feature_flag: "publishable_api_keys",
-  },
+   // DUKETMUTATION
+  // {
+  //   heading: "API Key Management",
+  //   description: "Create and manage API keys",
+  //   icon: KeyIcon,
+  //   to: "/a/publishable-api-keys",
+  //   feature_flag: "publishable_api_keys",
+  // },
   {
     heading: "Currencies",
     description: "Manage the currencies of your store",
@@ -84,12 +85,13 @@ const settings: SettingsCardType[] = [
     icon: TaxesIcon,
     to: "/a/settings/taxes",
   },
-  {
-    heading: "The Team",
-    description: "Manage users of your Medusa Store",
-    icon: UsersIcon,
-    to: "/a/settings/team",
-  },
+   // DUKETMUTATION
+  // {
+  //   heading: "The Team",
+  //   description: "Manage users of your Medusa Store",
+  //   icon: UsersIcon,
+  //   to: "/a/settings/team",
+  // },
 ]
 
 const renderCard = ({
@@ -178,7 +180,7 @@ const Settings = () => {
       <Route path="/regions/*" element={<Regions />} />
       <Route path="/currencies" element={<CurrencySettings />} />
       <Route path="/return-reasons" element={<ReturnReasons />} />
-      <Route path="/team" element={<Users />} />
+      {/* <Route path="/team" element={<Users />} /> */}  // DUKETMUTATION
       <Route path="/personal-information" element={<PersonalInformation />} />
       <Route path="/taxes/*" element={<Taxes />} />
       {getSettings().map((s) => (

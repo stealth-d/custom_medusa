@@ -13,7 +13,7 @@ import prompts from "prompts"
 import { Pool } from "pg"
 import url from "url"
 import { createDatabase } from "pg-god"
-import { track } from "medusa-telemetry"
+// import { track } from "medusa-telemetry"
 import inquirer from "inquirer"
 
 import reporter from "../reporter"
@@ -508,7 +508,7 @@ const attemptSeed = async (rootPath) => {
  * Main function that clones or copies the starter.
  */
 export const newStarter = async (args) => {
-  track("CLI_NEW")
+  // track("CLI_NEW")
 
   const {
     starter,
@@ -602,7 +602,7 @@ medusa new ${rootPath} [url-to-starter]
     await copy(starterPath, rootPath)
   }
 
-  track("CLI_NEW_LAYOUT_COMPLETED")
+  // track("CLI_NEW_LAYOUT_COMPLETED")
 
   let creds = dbCredentials
 
@@ -618,22 +618,22 @@ medusa new ${rootPath} [url-to-starter]
     )
   } else {
     if (!skipDb) {
-      track("CLI_NEW_SETUP_DB")
+      // track("CLI_NEW_SETUP_DB")
       await setupDB(dbName, creds)
     }
 
     if (!skipEnv) {
-      track("CLI_NEW_SETUP_ENV")
+      // track("CLI_NEW_SETUP_ENV")
       await setupEnvVars(rootPath, dbName, creds)
     }
 
     if (!skipMigrations) {
-      track("CLI_NEW_RUN_MIGRATIONS")
+      // track("CLI_NEW_RUN_MIGRATIONS")
       await runMigrations(rootPath)
     }
 
     if (seed) {
-      track("CLI_NEW_SEED_DB")
+      // track("CLI_NEW_SEED_DB")
       await attemptSeed(rootPath)
     }
   }
@@ -650,5 +650,5 @@ medusa new ${rootPath} [url-to-starter]
   }
 
   successMessage(rootPath)
-  track("CLI_NEW_SUCCEEDED")
+  // track("CLI_NEW_SUCCEEDED")
 }

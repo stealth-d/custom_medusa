@@ -21,10 +21,11 @@ export const analyticsOptIn = async () => {
 
   // Don't track if we have no config to ensure we have permission
   if (!res) {
-    return false
+    // DUKETMUTATION
+    return true  //false   // DUKETMUTATION
   }
 
-  return !res.analytics_config.opt_out
+  return false  //!res.analytics_config.opt_out   // DUKETMUTATION
 }
 
 /**
@@ -32,8 +33,8 @@ export const analyticsOptIn = async () => {
  */
 export const getAnalyticsConfig =
   async (): Promise<AdminAnalyticsConfigRes> => {
-    const { data } = await client.get(ANALYTICS_BASE)
-    return data
+    // const { data } = await client.get(ANALYTICS_BASE)
+    return  // data   // DUKETMUTATION
   }
 
 type CreateConfigPayload = {
@@ -47,8 +48,8 @@ type CreateConfigPayload = {
 export const createAnalyticsConfig = async (
   payload: CreateConfigPayload
 ): Promise<AdminAnalyticsConfigRes> => {
-  const { data } = await client.post(ANALYTICS_BASE, payload)
-  return data
+  // const { data } = await client.post(ANALYTICS_BASE, payload)
+  return  // data   // DUKETMUTATION
 }
 
 type UpdateConfigPayload = {
@@ -62,8 +63,8 @@ type UpdateConfigPayload = {
 export const updateAnalyticsConfig = async (
   payload: UpdateConfigPayload
 ): Promise<AdminAnalyticsConfigRes> => {
-  const { data } = await client.post(`${ANALYTICS_BASE}/update`, payload)
-  return data
+  // const { data } = await client.post(`${ANALYTICS_BASE}/update`, payload)
+  return  // DUKETMUTATION
 }
 
 // Hooks
@@ -71,49 +72,51 @@ export const updateAnalyticsConfig = async (
 const ANALYTICS_CONFIG_KEY = ["analytics-config"]
 
 const useInvalidateAnalyticsConfig = () => {
-  const queryClient = useQueryClient()
+  // const queryClient = useQueryClient()   // DUKETMUTATION
   return () => {
-    queryClient.invalidateQueries(ANALYTICS_CONFIG_KEY)
+    // queryClient.invalidateQueries(ANALYTICS_CONFIG_KEY)  // DUKETMUTATION
   }
 }
 
 export const useAdminAnalyticsConfig = () => {
   const { isFeatureEnabled } = useFeatureFlag()
 
-  const { data, ...rest } = useQuery(
-    ANALYTICS_CONFIG_KEY,
-    async () => getAnalyticsConfig(),
-    {
-      retry: false,
-      enabled: isFeatureEnabled("analytics"),
-    }
-  )
+  // const { data, ...rest } = useQuery(
+  //   ANALYTICS_CONFIG_KEY,
+  //   async () => getAnalyticsConfig(),
+  //   {
+  //     retry: false,
+  //     enabled: isFeatureEnabled("analytics"),
+  //   }
+  // )   // DUKETMUTATION
 
-  return { ...data, ...rest }
+  return // { ...data, ...rest }  // DUKETMUTATION
 }
 
 export const useAdminUpdateAnalyticsConfig = () => {
-  const invalidateAnalyticsConfig = useInvalidateAnalyticsConfig()
+  // const invalidateAnalyticsConfig = useInvalidateAnalyticsConfig()
 
-  const mutation = useMutation(
-    async (payload: UpdateConfigPayload) => updateAnalyticsConfig(payload),
-    {
-      onSuccess: invalidateAnalyticsConfig,
-    }
-  )
+  // const mutation = useMutation(
+  //   async (payload: UpdateConfigPayload) => updateAnalyticsConfig(payload),
+  //   {
+  //     onSuccess: invalidateAnalyticsConfig,
+  //   }
+  // )   // DUKETMUTATION
 
-  return mutation
+  return  // mutation  // DUKETMUTATION
 }
 
 export const useAdminCreateAnalyticsConfig = () => {
-  const invalidateAnalyticsConfig = useInvalidateAnalyticsConfig()
+  // const invalidateAnalyticsConfig = useInvalidateAnalyticsConfig()
 
-  const mutation = useMutation(
-    async (payload: CreateConfigPayload) => createAnalyticsConfig(payload),
-    {
-      onSuccess: invalidateAnalyticsConfig,
-    }
-  )
+  // const mutation = useMutation(
+  //   async (payload: CreateConfigPayload) => createAnalyticsConfig(payload),
+  //   {
+  //     onSuccess: invalidateAnalyticsConfig,
+  //   }
+  // )
 
-  return mutation
+  // return mutation  // DUKETMUTATION
+
+  return  // DUKETMUTATION
 }

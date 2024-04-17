@@ -4,7 +4,7 @@ import {
   ColorModeProvider,
   MobileProvider,
   ModalProvider,
-  AnalyticsProvider,
+  // AnalyticsProvider,
   ScrollControllerProvider,
 } from "docs-ui"
 import SearchProvider from "./search"
@@ -16,7 +16,7 @@ type ProvidersProps = {
 
 const Providers = ({ children }: ProvidersProps) => {
   return (
-    <AnalyticsProvider writeKey={process.env.NEXT_PUBLIC_SEGMENT_API_KEY}>
+    // <AnalyticsProvider writeKey={process.env.NEXT_PUBLIC_SEGMENT_API_KEY}>
       <MobileProvider>
         <ColorModeProvider>
           <ModalProvider>
@@ -28,7 +28,7 @@ const Providers = ({ children }: ProvidersProps) => {
           </ModalProvider>
         </ColorModeProvider>
       </MobileProvider>
-    </AnalyticsProvider>
+    {/* </AnalyticsProvider> */}
   )
 }
 

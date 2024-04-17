@@ -14,7 +14,7 @@ import ErrorPageContent from "@theme/ErrorPageContent"
 import type { Props } from "@theme/Layout"
 import useIsBrowser from "@docusaurus/useIsBrowser"
 import { useLocation } from "@docusaurus/router"
-import { useAnalytics } from "docs-ui"
+// import { useAnalytics } from "docs-ui"
 
 export default function Layout(props: Props): JSX.Element {
   const {
@@ -28,12 +28,12 @@ export default function Layout(props: Props): JSX.Element {
   useKeyboardNavigation()
   const isBrowser = useIsBrowser()
   const location = useLocation()
-  const { track } = useAnalytics()
+  // const { track } = useAnalytics()
 
   useEffect(() => {
     if (isBrowser) {
       const handlePlay = () => {
-        track("video_played")
+        // track("video_played")
       }
 
       const videos = document.querySelectorAll("video")

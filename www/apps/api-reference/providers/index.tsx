@@ -1,7 +1,7 @@
 "use client"
 
 import {
-  AnalyticsProvider,
+  // AnalyticsProvider,
   ColorModeProvider,
   MobileProvider,
   ModalProvider,
@@ -19,7 +19,7 @@ type ProvidersProps = {
 
 const Providers = ({ children }: ProvidersProps) => {
   return (
-    <AnalyticsProvider writeKey={process.env.NEXT_PUBLIC_SEGMENT_API_KEY}>
+    // <AnalyticsProvider writeKey={process.env.NEXT_PUBLIC_SEGMENT_API_KEY}>
       <PageLoadingProvider>
         <ModalProvider>
           <ColorModeProvider>
@@ -37,7 +37,7 @@ const Providers = ({ children }: ProvidersProps) => {
           </ColorModeProvider>
         </ModalProvider>
       </PageLoadingProvider>
-    </AnalyticsProvider>
+    // </AnalyticsProvider>
   )
 }
 

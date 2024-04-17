@@ -3,7 +3,7 @@ import "regenerator-runtime/runtime"
 
 import express from "express"
 import { GracefulShutdownServer } from "medusa-core-utils"
-import { track } from "medusa-telemetry"
+// import { track } from "medusa-telemetry"
 import { scheduleJob } from "node-schedule"
 
 import loaders from "../loaders"
@@ -14,7 +14,7 @@ const CRON_SCHEDULE = EVERY_SIXTH_HOUR
 
 export default async function ({ port, directory }) {
   async function start() {
-    track("CLI_START")
+    // track("CLI_START")
 
     const app = express()
 
@@ -31,7 +31,7 @@ export default async function ({ port, directory }) {
             return
           }
           Logger.success(serverActivity, `Server is ready on port: ${port}`)
-          track("CLI_START_COMPLETED")
+          // track("CLI_START_COMPLETED")
         })
       )
 
@@ -55,7 +55,7 @@ export default async function ({ port, directory }) {
       process.on("SIGINT", gracefulShutDown)
 
       scheduleJob(CRON_SCHEDULE, () => {
-        track("PING")
+        // track("PING")
       })
 
       return { dbConnection, server }

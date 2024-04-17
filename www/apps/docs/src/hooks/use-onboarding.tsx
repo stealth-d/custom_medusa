@@ -6,11 +6,11 @@ const useOnboarding = () => {
   const isOnboarding = useQueryStringValue("ref") === "onboarding"
   const [showNotification, setShowNotification] = useState(isOnboarding)
   const { addNotification, removeNotification, generateId } = useNotifications()
-  const { track } = useAnalytics()
+  // const { track } = useAnalytics()
 
   useEffect(() => {
     if (isOnboarding) {
-      track("finished_onboarding")
+      // track("finished_onboarding")
       const id = generateId()
       addNotification({
         title: "Thank you for installing Medusa!",

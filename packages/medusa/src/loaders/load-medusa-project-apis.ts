@@ -2,7 +2,7 @@ import { promiseAll } from "@medusajs/utils"
 import { Express } from "express"
 import glob from "glob"
 import _ from "lodash"
-import { trackInstallation } from "medusa-telemetry"
+// import { trackInstallation } from "medusa-telemetry"
 import { EOL } from "os"
 import path from "path"
 import { ConfigModule, Logger, MedusaContainer } from "../types/global"
@@ -75,7 +75,7 @@ export default async ({
     )
   }
 
-  resolved.forEach((plugin) => trackInstallation(plugin.name, "plugin"))
+  // resolved.forEach((plugin) => trackInstallation(plugin.name, "plugin"))
 }
 
 function getResolvedPlugins(

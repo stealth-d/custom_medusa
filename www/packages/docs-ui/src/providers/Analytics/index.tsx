@@ -29,7 +29,7 @@ export type TrackedEvent = {
   options?: Record<string, any>
 }
 
-const AnalyticsContext = createContext<AnalyticsContextType | null>(null)
+// const AnalyticsContext = createContext<AnalyticsContextType | null>(null)
 
 export type AnalyticsProviderProps = {
   writeKey?: string
@@ -39,92 +39,94 @@ export type AnalyticsProviderProps = {
 const LOCAL_STORAGE_KEY = "ajs_anonymous_id"
 
 export const AnalyticsProvider = ({
-  writeKey = "temp",
-  children,
+  // writeKey = "temp",
+  // children,
 }: AnalyticsProviderProps) => {
   // loaded is used to ensure that a connection has been made to segment
   // even if it failed. This is to ensure that the connection isn't
   // continuously retried
-  const [loaded, setLoaded] = useState<boolean>(false)
-  const [analytics, setAnalytics] = useState<Analytics | null>(null)
-  const analyticsBrowser = new AnalyticsBrowser()
-  const [queue, setQueue] = useState<TrackedEvent[]>([])
+  // const [loaded, setLoaded] = useState<boolean>(false)
+  // const [analytics, setAnalytics] = useState<Analytics | null>(null)
+  // const analyticsBrowser = new AnalyticsBrowser()
+  // const [queue, setQueue] = useState<TrackedEvent[]>([])
 
   const init = useCallback(() => {
     if (!loaded) {
-      analyticsBrowser
-        .load(
-          { writeKey },
-          {
-            initialPageview: true,
-            user: {
-              localStorage: {
-                key: LOCAL_STORAGE_KEY,
-              },
-            },
-          }
-        )
-        .then((instance) => {
-          setAnalytics(instance[0])
-        })
-        .catch((e) =>
-          console.error(`Could not connect to Segment. Error: ${e}`)
-        )
-        .finally(() => setLoaded(true))
+      // analyticsBrowser
+      //   .load(
+      //     { writeKey },
+      //     {
+      //       initialPageview: true,
+      //       user: {
+      //         localStorage: {
+      //           key: LOCAL_STORAGE_KEY,
+      //         },
+      //       },
+      //     }
+      //   )
+      //   .then((instance) => {
+      //     setAnalytics(instance[0])
+      //   })
+      //   .catch((e) =>
+      //     console.error(`Could not connect to Segment. Error: ${e}`)
+      //   )
+      //   .finally(() => setLoaded(true))
     }
-  }, [loaded, writeKey])
+  }, []) //[loaded, writeKey])
 
   const track = useCallback(
     async (
-      event: string,
-      options?: Record<string, any>,
-      callback?: () => void
+      // event: string,
+      // options?: Record<string, any>,
+      // callback?: () => void
     ) => {
-      if (analytics) {
-        void analytics.track(
-          event,
-          {
-            ...options,
-            uuid: analytics.user().anonymousId(),
-          },
-          callback
-        )
-      } else {
-        // push the event into the queue
-        setQueue((prevQueue) => [
-          ...prevQueue,
-          {
-            event,
-            options,
-          },
-        ])
-        if (callback) {
-          console.warn(
-            "Segment is either not installed or not configured. Simulating success..."
-          )
-          callback()
-        }
-      }
-    },
-    [analytics, loaded]
+      // if (analytics) {
+      //   void analytics.track(
+      //     event,
+      //     {
+      //       ...options,
+      //       uuid: analytics.user().anonymousId(),
+      //     },
+      //     callback
+      //   )
+      // } else {
+      //   // push the event into the queue
+      //   setQueue((prevQueue) => [
+      //     ...prevQueue,
+      //     {
+      //       event,
+      //       options,
+      //     },
+      //   ])
+      //   if (callback) {
+      //     console.warn(
+      //       "Segment is either not installed or not configured. Simulating success..."
+      //     )
+      //     callback()
+      //   }
+      // }
+    },[]
+    // [analytics, loaded]
   )
 
-  useEffect(() => {
-    init()
-  }, [init])
+  // useEffect(() => {
+  //   init()
+  // }, [init])
 
-  useEffect(() => {
-    if (analytics && queue.length) {
-      // track stuff in queue
-      queue.forEach(async (trackEvent) =>
-        track(trackEvent.event, trackEvent.options)
-      )
-      setQueue([])
-    }
-  }, [analytics, queue])
+  // useEffect(() => {
+  //   if (analytics && queue.length) {
+  //     // track stuff in queue
+  //     queue.forEach(async (trackEvent) =>
+  //       track(trackEvent.event, trackEvent.options)
+  //     )
+  //     setQueue([])
+  //   }
+  // }, [analytics, queue])
 
   return (
-    <AnalyticsContext.Provider
+    <p>
+      no
+      {/* <AnalyticsContext.Provider
       value={{
         analytics,
         track,
@@ -132,16 +134,17 @@ export const AnalyticsProvider = ({
       }}
     >
       {children}
-    </AnalyticsContext.Provider>
+    </AnalyticsContext.Provider> */}
+    </p>
   )
 }
 
 export const useAnalytics = () => {
-  const context = useContext(AnalyticsContext)
+  // const context = useContext(AnalyticsContext)
 
-  if (!context) {
-    throw new Error("useAnalytics must be used within a AnalyticsProvider")
-  }
+  // if (!context) {
+  //   throw new Error("useAnalytics must be used within a AnalyticsProvider")
+  // }
 
-  return context
+  return  //context
 }

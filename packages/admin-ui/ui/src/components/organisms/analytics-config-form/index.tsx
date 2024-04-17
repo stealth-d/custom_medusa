@@ -18,23 +18,24 @@ type Props = {
 }
 
 const AnalyticsConfigForm = ({ form, compact }: Props) => {
-  const { control, setValue, path } = form
-  const { t } = useTranslation()
+  // const { control, setValue, path } = form
+  // const { t } = useTranslation()
 
-  const watchOptOut = useWatch({
-    control,
-    name: path("opt_out"),
-  })
+  // const watchOptOut = useWatch({
+  //   control,
+  //   name: path("opt_out"),
+  // })
 
-  useEffect(() => {
-    if (watchOptOut) {
-      setValue(path("anonymize"), false)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watchOptOut])
+  // useEffect(() => {
+  //   if (watchOptOut) {
+  //     setValue(path("anonymize"), false)
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [watchOptOut])
 
   return (
-    <div className="gap-y-xlarge flex flex-col">
+    <>
+    {/* <div className="gap-y-xlarge flex flex-col">
       <div
         className={clsx("flex items-center gap-3 transition-opacity", {
           "opacity-50": watchOptOut,
@@ -118,7 +119,8 @@ const AnalyticsConfigForm = ({ form, compact }: Props) => {
           }}
         />
       </div>
-    </div>
+    </div> */}
+    </>
   )
 }
 

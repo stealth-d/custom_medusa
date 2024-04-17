@@ -11,7 +11,7 @@ import glob from "glob"
 import _ from "lodash"
 import { createRequireFromPath } from "medusa-core-utils"
 import { OauthService } from "medusa-interfaces"
-import { trackInstallation } from "medusa-telemetry"
+// import { trackInstallation } from "medusa-telemetry"
 import { EOL } from "os"
 import path from "path"
 import { EntitySchema } from "typeorm"
@@ -118,7 +118,7 @@ export default async ({
     )
   }
 
-  resolved.forEach((plugin) => trackInstallation(plugin.name, "plugin"))
+  // resolved.forEach((plugin) => trackInstallation(plugin.name, "plugin"))
 }
 
 function getResolvedPlugins(

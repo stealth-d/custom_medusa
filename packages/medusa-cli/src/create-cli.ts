@@ -1,5 +1,5 @@
 import { sync as existsSync } from "fs-exists-cached"
-import { setTelemetryEnabled } from "medusa-telemetry"
+// import { setTelemetryEnabled } from "medusa-telemetry"
 import path from "path"
 import resolveCwd from "resolve-cwd"
 
@@ -133,7 +133,7 @@ function buildLocalCommands(cli, isLocalProject) {
 
       handler: handlerP(({ enable, disable }) => {
         const enabled = Boolean(enable) || !disable
-        setTelemetryEnabled(enabled)
+        // setTelemetryEnabled(enabled)
         reporter.info(
           `Telemetry collection ${enabled ? `enabled` : `disabled`}`
         )

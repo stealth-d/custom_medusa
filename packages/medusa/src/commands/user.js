@@ -2,7 +2,7 @@ import "core-js/stable"
 import "regenerator-runtime/runtime"
 
 import express from "express"
-import { track } from "medusa-telemetry"
+// import { track } from "medusa-telemetry"
 
 import loaders from "../loaders"
 import Logger from "../loaders/logger"
@@ -53,7 +53,7 @@ export default async function ({
   keepAlive,
   invite,
 }) {
-  track("CLI_USER", { with_id: !!id })
+  // track("CLI_USER", { with_id: !!id })
   const app = express()
   try {
     const { container } = await loaders({
@@ -86,7 +86,7 @@ export default async function ({
     process.exit(1)
   }
 
-  track("CLI_USER_COMPLETED", { with_id: !!id })
+  // track("CLI_USER_COMPLETED", { with_id: !!id })
 
   if (!keepAlive) {
     process.exit()

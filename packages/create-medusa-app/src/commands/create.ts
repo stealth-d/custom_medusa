@@ -14,7 +14,7 @@ import logMessage from "../utils/log-message.js"
 import createAbortController, {
   isAbortError,
 } from "../utils/create-abort-controller.js"
-import { track } from "medusa-telemetry"
+// import { track } from "medusa-telemetry"
 import boxen from "boxen"
 import { emojify } from "node-emoji"
 import ProcessManager from "../utils/process-manager.js"
@@ -59,7 +59,7 @@ export default async ({
   verbose = false,
   v2 = false,
 }: CreateOptions) => {
-  track("CREATE_CLI_CMA")
+  // track("CREATE_CLI_CMA") // DUKETMUTATION
 
   const spinner: Ora = ora()
   const processManager = new ProcessManager()
@@ -111,16 +111,16 @@ export default async ({
     : { client: null, dbConnectionString: "" }
   isDbInitialized = true
 
-  track("CMA_OPTIONS", {
-    repoUrl,
-    seed,
-    boilerplate,
-    skipDb,
-    browser,
-    migrations,
-    installNextjs,
-    verbose,
-  })
+  // track("CMA_OPTIONS", {
+  //   repoUrl,
+  //   seed,
+  //   boilerplate,
+  //   skipDb,
+  //   browser,
+  //   migrations,
+  //   installNextjs,
+  //   verbose,
+  // }) // DUKETMUTATION
 
   logMessage({
     message: `${emojify(

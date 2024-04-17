@@ -6,7 +6,7 @@ import {
 } from "@medusajs/utils"
 import glob from "glob"
 import { isDefined } from "medusa-core-utils"
-import { trackFeatureFlag } from "medusa-telemetry"
+// import { trackFeatureFlag } from "medusa-telemetry"
 import path from "path"
 import { FlagSettings } from "../../types/feature-flags"
 import { Logger } from "../../types/global"
@@ -82,7 +82,7 @@ export default (
     }
 
     if (flagConfig[flagSettings.key]) {
-      trackFeatureFlag(flagSettings.key)
+      // trackFeatureFlag(flagSettings.key)
     }
   }
 
